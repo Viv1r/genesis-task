@@ -1,0 +1,44 @@
+.dropdown_list {
+    width: 400px;
+    max-width: 90vw;
+}
+
+.options {
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+}
+
+.header, .option {
+    width: 100%;
+    height: 50px;
+    font-size: 18px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: white;
+    color: #3a3a3a;
+    border: 1px solid rgba($color: #000000, $alpha: .25);
+    cursor: pointer;
+    transition: all .2s ease-out;
+}
+
+.header .arrow {
+    width: 36px;
+    height: 36px;
+    margin-left: auto;
+    transition: .2s ease-out;
+
+    &.flip {
+        transform: rotate(180deg);
+    }
+}
+
+.option {
+    border-top: none;
+    
+    &:hover {
+        background: #ececec;
+    }
+}

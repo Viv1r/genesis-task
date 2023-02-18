@@ -1,47 +1,61 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="container">
+    <DropdownList
+      :options="globalStore.typeList"
+      :placeholder="'Не выбрано'"
+      @input="val => globalStore.setActiveType(val)"
+    />
+    <Button
+      :condition="globalStore.activeType"
+      :loading="globalStore.loading"
+      @action="globalStore.addItem()"
+    >
+      Создать
+    </Button>
+    <ResultList/>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
+<script>
+import { useGlobalStore } from '@/stores/global.js';
+import { mapStores } from 'pinia';
+import DropdownList from './components/DropdownList/DropdownList.vue';
+import Button from './components/Button/Button.vue';
+import ResultList from './components/ResultList/ResultList.vue';
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+export default {
+  components: {
+    DropdownList,
+    Button,
+    ResultList
+  },
+  computed: {
+    ...mapStores(useGlobalStore)
+  },
+  mounted() {
+    this.globalStore.loadItems();
+  }
 }
+</script>
 
-@media (min-width: 1024px) {
-  header {
+<style lang="scss" scoped>
+  .container {
+    margin: 0 auto;
+    padding: 50px;
+    width: fit-content;
+    min-width: 300px;
+    max-width: 100vw;
+    height: fit-content;
+    min-height: 200px;
     display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    border-radius: 16px;
+    box-shadow: 2px 2px 8px rgba($color: #000000, $alpha: .25);
 
-  .logo {
-    margin: 0 2rem 0 0;
+    .button {
+      margin-right: auto;
+    }
   }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
